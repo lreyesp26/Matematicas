@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Cuestionario de Resta</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    </head>
+    <style>
+        .bienvenido-texto {
+            color: white;
+        }
+        .custom-sidebar {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            height: 100vh;
+        }
+        .custom-sidebar button {
+            background-color: #333;
+            color: white;
+            border: none;
+            margin-bottom: 10px;
+        }
+        .custom-sidebar button:hover {
+            background-color: #555;
+        }
+        .content-container {
+            background-color: #fff;
+            padding: 20px;
+        }
+    </style>
+    <body class="overflow-hidden">
+        <nav class="navbar navbar-dark bg-dark fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/estudiante">Matemágicas</a>
+                <h2 class="bienvenido-texto">Bienvenido, <span th:text="${session.nombreEstudiante}"></span> <span th:text="${session.apellidoEstudiante}"></span> <span th:text="${session.estudianteId}"></span></h2>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Matemágicas</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="/estudiante">Inicio</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/perfilestudiante">Perfil</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/logout">Cerrar Sesión</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6 custom-sidebar d-flex justify-content-center align-items-center">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Cuestionario de Resta</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Pregunta <span id="pregunta-actual">1</span> de 4 (2.5 puntos cada una)</h6>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                ¿Cuánto es <span id="numero1"></span> - <span id="numero2"></span>?
+                            </p>
+                            <br>
+                            <div class="card-text">
+                                <!-- Agrega un campo de texto para la respuesta -->
+                                <input type="text" id="respuesta" placeholder="Escribe tu respuesta">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-flex justify-content-center align-items-center">
+                    <!-- Dentro de la página "estudiante" -->
+                    <div class="text-center">
+                        <div>Puntuación actual: <span id="puntuacion">0</span></div>
+
+                        <button class="btn btn-primary" onclick="verificarRespuesta()" id="boton-verificar">Verificar</button>
+                        <input type="hidden" id="materia" name="materia" value="Resta">
+
+                        <button id="enviarPuntuacion" type="button" style="display: none;">Enviar puntuación</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
+        <script>
+                            let preguntaActual = 1;
+                            let puntuacion = 0;
+
+                            // Función para generar una nueva pregunta de resta
+                            function generarPregunta() {
+                                const numero1 = Math.floor(Math.random() * 10);
+                                const numero2 = Math.floor(Math.random() * 10);
+                                const respuestaCorrecta = numero1 - numero2; // Cambio a resta
+                                document.getElementById("numero1").textContent = numero1;
+                                document.getElementById("numero2").textContent = numero2;
+                                return respuestaCorrecta;
+                            }
+
+                            // Inicializa el juego generando la primera pregunta
+                            let respuestaCorrecta = generarPregunta();
+
+                            // Función para verificar la respuesta ingresada por el usuario
+                            function verificarRespuesta() {
+                                const respuestaUsuario = parseInt(document.getElementById("respuesta").value);
+                                if (respuestaUsuario === respuestaCorrecta) {
+                                    alert("¡Respuesta correcta! Sumaste 2.5 puntos.");
+                                    puntuacion += 2.5;
+                                } else {
+                                    alert(`Respuesta incorrecta. La respuesta correcta era ${respuestaCorrecta}.`);
+                                }
+
+                                // Actualiza la puntuación antes de generar la siguiente pregunta
+                                document.getElementById("puntuacion").textContent = puntuacion;
+
+                                // Genera la siguiente pregunta o finaliza el cuestionario
+                                preguntaActual++;
+                                if (preguntaActual <= 4) {
+                                    document.getElementById("pregunta-actual").textContent = preguntaActual;
+                                    respuestaCorrecta = generarPregunta();
+                                    document.getElementById("respuesta").value = "";
+                                } else {
+                                    alert(`¡Has completado todas las preguntas! Puntuación final: ${puntuacion}`);
+                                    document.getElementById("boton-verificar").disabled = true;
+
+                                    // Mostrar el botón "Enviar puntuación"
+                                    document.getElementById("enviarPuntuacion").style.display = "block";
+
+                                    // Mostrar el formulario de puntuación
+                                    document.getElementById("formulario-puntuacion").style.display = "block";
+                                    document.getElementById("puntuacion-final").value = puntuacion;
+                                }
+                            }
+
+                            function enviarPuntuacion() {
+                                const calificacion = parseFloat(document.getElementById("puntuacion").textContent);
+                                const materia = document.getElementById("materia").value;
+                                console.log(calificacion + materia);
+                                // Realizar una solicitud POST al servidor para enviar los datos
+                                fetch(`/enviarpuntuacion?materia=${materia}&calificacion=${calificacion}`, {
+                                    method: 'GET',
+                                    headers: {
+                                        'Content-Type': 'application/x-www-form-urlencoded'
+                                    }
+                                }).then(response => {
+
+                                }).catch(error => {
+                                    console.error('Error:', error);
+                                });
+                            }
+
+                            let enviarPuntuacion2 = document.getElementById('enviarPuntuacion');
+
+                            enviarPuntuacion2.addEventListener("click", (e) => {
+                                e.preventDefault();
+                                const calificacion = parseFloat(document.getElementById("puntuacion").textContent);
+                                const materia = document.getElementById("materia").value;
+                                console.log(calificacion + materia);
+                                enviarPuntuacion();
+                            });
+        </script>
+
+
+    </body>
+</html>
