@@ -4,7 +4,6 @@ import com.example.Matemagicas.dto.EstudianteCalificacionDTO;
 import com.example.Matemagicas.modelos.Calificacion;
 import com.example.Matemagicas.modelos.Estudiante;
 import com.example.Matemagicas.modelos.Representate;
-import com.example.Matemagicas.repositorio.CalificacionRepository;
 import com.example.Matemagicas.repositorio.EstudianteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -130,20 +129,9 @@ public class LoginController {
             if (representante != null) {
                 List<Estudiante> estudiantes = representante.getEstudiantes();
 
-                List<EstudianteCalificacionDTO> estudiantesConCalificaciones = new ArrayList<>();
+                // Agrega la lista de estudiantes al modelo
+                model.addAttribute("estudiantes", estudiantes);
 
-                for (Estudiante estudiante : estudiantes) {
-                    for (Calificacion calificacion : estudiante.getCalificaciones()) {
-                        EstudianteCalificacionDTO dto = new EstudianteCalificacionDTO();
-                        dto.setNombre(estudiante.getNombre());
-                        dto.setApellido(estudiante.getApellido());
-                        dto.setMateria(calificacion.getMateria());
-                        dto.setCalificacion(calificacion.getCalificacion());
-                        estudiantesConCalificaciones.add(dto);
-                    }
-                }
-
-                model.addAttribute("estudiantes", estudiantesConCalificaciones);
                 return "estudiantes";
             }
         }

@@ -40,16 +40,21 @@
                     <tr>
                         <th>Nombre</th>
                         <th>Apellido</th>
-                        <th>Materia</th>
-                        <th>Calificación</th>
+                        <th>Fecha de Nacimiento</th>
+                        <th>Correo Electrónico</th>
+                        <!-- Agrega más columnas según los atributos que desees mostrar -->
                     </tr>
                 </thead>
                 <tbody>
+                    <!-- Itera sobre la lista de estudiantes y muestra la información de cada uno -->
                     <tr th:each="estudiante : ${estudiantes}">
                         <td th:text="${estudiante.nombre}"></td>
                         <td th:text="${estudiante.apellido}"></td>
-                        <td th:text="${estudiante.materia}"></td>
-                        <td th:text="${estudiante.calificacion}"></td>
+                        <td th:text="${estudiante.fechadenacimiento}"></td>
+                        <td th:text="${estudiante.correoelectronico}"></td>
+                        <td>
+                            <a th:href="@{/verCalificaciones/{id}(id=${estudiante.id})}" class="btn btn-primary">Ver Calificaciones</a>
+                        </td>
                     </tr>
                 </tbody>
             </table>

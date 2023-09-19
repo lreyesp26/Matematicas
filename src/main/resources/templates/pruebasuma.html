@@ -88,6 +88,9 @@
 
                         <button class="btn btn-primary" onclick="verificarRespuesta()" id="boton-verificar">Verificar</button>
                         <input type="hidden" id="materia" name="materia" value="Suma">
+                        <input type="hidden" id="supervisado" name="supervisado" value="No">
+
+                        <p>Estado de las observaciones: <span id="observacionesEstado">No muy bien 😕</span></p>
 
                         <button id="enviarPuntuacion" type="button" style="display: none;">Enviar puntuación</button>
                     </div>
@@ -123,6 +126,19 @@
                                     alert(`Respuesta incorrecta. La respuesta correcta era ${respuestaCorrecta}.`);
                                 }
 
+                                if (puntuacion === 0) {
+                                    document.getElementById("observacionesEstado").textContent = "No muy bien 😕";
+                                } else if (puntuacion === 2.5) {
+                                    document.getElementById("observacionesEstado").textContent = "Regular 😐";
+                                } else if (puntuacion === 5) {
+                                    document.getElementById("observacionesEstado").textContent = "Bueno 🙂";
+                                } else if (puntuacion === 7.5) {
+                                    document.getElementById("observacionesEstado").textContent = "Muy bien 😃";
+                                } else if (puntuacion === 10) {
+                                    document.getElementById("observacionesEstado").textContent = "¡Excelente! 🌟";
+                                }
+
+
                                 // Actualiza la puntuación antes de generar la siguiente pregunta
                                 document.getElementById("puntuacion").textContent = puntuacion;
 
@@ -148,15 +164,23 @@
                             function enviarPuntuacion() {
                                 const calificacion = parseFloat(document.getElementById("puntuacion").textContent);
                                 const materia = document.getElementById("materia").value;
-                                console.log(calificacion + materia);
+                                const supervisado = document.getElementById("supervisado").value;
+                                const observaciones = document.getElementById("observacionesEstado").textContent;
+
+                                console.log(`Calificación: ${calificacion}`);
+                                console.log(`Materia: ${materia}`);
+                                console.log(`Supervisado: ${supervisado}`);
+                                console.log(`Observaciones: ${observaciones}`);
+
                                 // Realizar una solicitud POST al servidor para enviar los datos
-                                fetch(`/enviarpuntuacion?materia=${materia}&calificacion=${calificacion}`, {
-                                    method: 'GET',
+                                // Incluye la fecha de supervisión en la solicitud
+                                fetch(`/enviarpuntuacion?materia=${materia}&calificacion=${calificacion}&supervisado=${supervisado}&observaciones=${observaciones}`, {
+                                    method: 'GET', // Cambia 'GET' a 'POST' si necesitas enviar la solicitud como POST
                                     headers: {
                                         'Content-Type': 'application/x-www-form-urlencoded'
                                     }
                                 }).then(response => {
-
+                                    // Manejar la respuesta del servidor si es necesario
                                 }).catch(error => {
                                     console.error('Error:', error);
                                 });
@@ -172,6 +196,5 @@
                                 enviarPuntuacion();
                             });
         </script>
-
     </body>
 </html>

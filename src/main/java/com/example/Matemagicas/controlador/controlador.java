@@ -20,6 +20,12 @@ public class controlador {
         ModelAndView modelo = new ModelAndView("index");
         return modelo;
     }
+    
+    @GetMapping("/verCalificaciones")
+    public ModelAndView vistaverCalificaciones() {
+        ModelAndView modelo = new ModelAndView("verCalificaciones");
+        return modelo;
+    }
 
     @GetMapping("/login")
     public ModelAndView vistaLogin() {
@@ -90,6 +96,12 @@ public class controlador {
     @GetMapping("/vistapruebamultiplicacion")
     public ModelAndView vistapruebamultiplicacion() {
         ModelAndView modelo = new ModelAndView("pruebamultiplicacion");
+        return modelo;
+    }
+    
+    @GetMapping("/verprueba")
+    public ModelAndView verprueba() {
+        ModelAndView modelo = new ModelAndView("verprueba");
         return modelo;
     }
 }

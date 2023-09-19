@@ -31,4 +31,8 @@ public class Representate {
     // Define la relación con la clase Estudiante
     @OneToMany(mappedBy = "representante")
     private List<Estudiante> estudiantes;
+
+    @OneToMany(mappedBy = "representanteSupervisor")
+    private List<Calificacion> calificacionesSupervisadas;
+
 }

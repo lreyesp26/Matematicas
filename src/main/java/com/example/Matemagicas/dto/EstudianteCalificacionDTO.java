@@ -1,18 +1,25 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.example.Matemagicas.dto;
 
-/**
- *
- * @author Luis
- */
+import java.util.Date;
+
 public class EstudianteCalificacionDTO {
+
+    private Long id; // Campo para el identificador único
     private String nombre;
     private String apellido;
     private String materia;
     private Double calificacion;
+    private Boolean supervisado;
+    private String observaciones;
+    private Date fechaSupervision;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getNombre() {
         return nombre;
@@ -44,5 +51,29 @@ public class EstudianteCalificacionDTO {
 
     public void setCalificacion(Double calificacion) {
         this.calificacion = calificacion;
+    }
+
+    public Boolean getSupervisado() {
+        return supervisado;
+    }
+
+    public void setSupervisado(Boolean supervisado) {
+        this.supervisado = supervisado;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+
+    public Date getFechaSupervision() {
+        return fechaSupervision;
+    }
+
+    public void setFechaSupervision(Date fechaSupervision) {
+        this.fechaSupervision = fechaSupervision;
     }
 }
